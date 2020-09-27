@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app id="App" class=" grey lighten-2 ">
+    <MenuNavigation />
+    <v-main class="bar grey darken-3 ">
+      <v-card class=" grey lighten-5 ma-5">
+        <router-view />
+      </v-card>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MenuNavigation from "@/components/shared/MenuNavigation.vue";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    MenuNavigation,
+  },
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
