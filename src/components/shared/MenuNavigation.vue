@@ -5,8 +5,8 @@
       clipped
       color="grey darken-3"
       dark
+      absolute
       app
-      bottom
     >
       <v-list dense>
         <v-list-item
@@ -30,12 +30,8 @@
 
 <script>
 export default {
-  props: {
-    source: String,
-  },
   data: () => ({
-    dialog: false,
-    drawer: null,
+    drawer: true,
     items: [
       { icon: "mdi-home", text: "Home", router: "home" },
       { icon: "mdi-heart-box", text: "Campanhas", router: "campaigns" },

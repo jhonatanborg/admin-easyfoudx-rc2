@@ -1,5 +1,5 @@
 <template>
-  <v-app id="App" class=" grey lighten-2 ">
+  <v-app id="App" class="app grey lighten-2 ">
     <MenuNavigation />
     <v-main class="bar grey darken-3 ">
       <v-card class=" grey lighten-5 ma-5">
