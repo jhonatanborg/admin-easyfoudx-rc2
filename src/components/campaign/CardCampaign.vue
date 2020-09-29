@@ -5,34 +5,36 @@
       link
       class="my-2 "
       active-class="purple"
-      v-for="(item, index) in 10"
-      :key="index"
-      :to="{ name: 'campaign-details', params: { id: 15 } }"
+      :to="{ name: 'campaign-details', query: { id: campaign.id } }"
     >
       <v-list-item>
         <v-list-item-avatar size="120" tile>
           <v-img
-            src="https://images.pexels.com/photos/1028599/pexels-photo-1028599.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260"
+            :src="'https://api.easyfundx.com/images/' + campaign.imagem_capa"
           ></v-img>
         </v-list-item-avatar>
         <v-list-item-content>
-          <v-list-item-title>Ajude a Cata-Tudo Recicla </v-list-item-title>
+          <v-list-item-title>{{ campaign.titulo }}</v-list-item-title>
           <v-list-item-subtitle
-            ><span class="text--primary "></span> &mdash; Catadores precisam de
-            um veículo para garantir trabalho e renda de 19 famílias afetadas na
-            pandemia."</v-list-item-subtitle
-          >
-          <v-list-item-action-text>15/04/2020</v-list-item-action-text>
+            class="details-campaign"
+            v-html="campaign.descricao"
+          ></v-list-item-subtitle>
+          <v-list-item-action-text>{{
+            campaign.data_registro_h
+          }}</v-list-item-action-text>
         </v-list-item-content>
 
         <v-list-item-action>
           <v-chip
             small
             link
-            color="green accent-3
-"
-            >Publicada</v-chip
+            dense
+            :color="campaign.color"
+            text-color="white"
+            dark
           >
+            <span v-text="campaign.status"></span>
+          </v-chip>
         </v-list-item-action>
       </v-list-item>
     </v-card>
@@ -40,7 +42,24 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    campaign: Object,
+  },
+  data() {
+    return {
+      colorState: null,
+    };
+  },
+  methods: {},
+};
 </script>
 
-<style></style>
+<style>
+.details-campaign {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+</style>

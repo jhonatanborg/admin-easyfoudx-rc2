@@ -22,8 +22,9 @@ const routes = [
         component: () => import("../components/campaign/StartCampaign.vue"),
       },
       {
-        path: "/campanha-detalhes/:id",
+        path: "/campanha-detalhes/",
         name: "campaign-details",
+        props: (route) => ({ query: route.query.id }),
         component: () => import("../components/campaign/CampaignDetails.vue"),
       },
     ],
@@ -60,6 +61,23 @@ const routes = [
     path: "/usuarios",
     name: "users",
     component: () => import("../views/Users.vue"),
+  },
+  {
+    path: "/sessao",
+    name: "session",
+    component: () => import("../views/Session.vue"),
+    children: [
+      {
+        path: "/",
+        name: "login",
+        component: () => import("../components/session/Login.vue"),
+      },
+      {
+        path: "/registro",
+        name: "register",
+        component: () => import("../components/session/Register.vue"),
+      },
+    ],
   },
 ];
 

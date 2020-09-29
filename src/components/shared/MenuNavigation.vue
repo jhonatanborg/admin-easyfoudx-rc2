@@ -6,6 +6,7 @@
       color="grey darken-3"
       dark
       absolute
+      permanent
       app
     >
       <v-list dense>

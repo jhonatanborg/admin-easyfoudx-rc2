@@ -7,22 +7,50 @@
       <v-divider class="my-3"></v-divider>
       <Report />
       <div>
-        <v-row dense justify="space-between">
-          <v-col cols="3">
+        <v-row dense justify="space-between" align="center">
+          <v-col cols="2">
             <h3>Campanhas</h3>
           </v-col>
           <v-col>
             <v-row dense>
               <v-col cols="auto"
-                ><v-chip link color="grey lighten-5">Cadastradas</v-chip></v-col
+                ><v-chip
+                  @click="$store.commit('setTypeFilter', null)"
+                  link
+                  color="grey lighten-5"
+                  >Todas</v-chip
+                ></v-col
               >
               <v-col cols="auto"
-                ><v-chip link color="grey lighten-5">Em análise</v-chip></v-col
+                ><v-chip
+                  @click="$store.commit('setTypeFilter', 0)"
+                  link
+                  color="grey lighten-5"
+                  >Cadastradas</v-chip
+                ></v-col
+              >
+              <v-col cols="auto"
+                ><v-chip
+                  @click="$store.commit('setTypeFilter', 1)"
+                  link
+                  color="grey lighten-5"
+                  >Em análise</v-chip
+                ></v-col
               ><v-col cols="auto"
-                ><v-chip link color="grey lighten-5">Publicadas</v-chip></v-col
+                ><v-chip
+                  @click="$store.commit('setTypeFilter', 2)"
+                  link
+                  color="grey lighten-5"
+                  >Publicadas</v-chip
+                ></v-col
               >
               <v-col cols="auto"
-                ><v-chip link color="grey lighten-5">Finalizadas</v-chip></v-col
+                ><v-chip
+                  @click="$store.commit('setTypeFilter', 3)"
+                  link
+                  color="grey lighten-5"
+                  >Finalizadas</v-chip
+                ></v-col
               >
               <v-col cols="4">
                 <v-btn rounded small color="primary" dark
@@ -34,12 +62,16 @@
         </v-row>
       </div>
       <v-divider></v-divider>
-      <CardCampaign />
+      <div v-for="(item, index) in campaigns" :key="index">
+        <CardCampaign :campaign="item" />
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
+import CampaignService from "@/services/campaign/CampaignService";
+
 import Report from "@/components/shared/Report.vue";
 import CardCampaign from "@/components/campaign/CardCampaign.vue";
 export default {
@@ -47,6 +79,9 @@ export default {
   components: {
     Report,
     CardCampaign,
+  },
+  mounted() {
+    this.initialize();
   },
   data() {
     return {
@@ -59,6 +94,44 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    campaigns() {
+      if (this.$store.state.typeFilter != null) {
+        let result;
+        result = this.$store.state.campaigns.filter((campaigns) => {
+          return campaigns.estado == this.$store.state.typeFilter;
+        });
+        return result || {};
+      }
+      return this.$store.state.campaigns || {};
+    },
+  },
+  methods: {
+    initialize() {
+      CampaignService.listCampaigns()
+        .then((response) => {
+          response.data.map((item) => {
+            if (item.estado == 0) {
+              item.status = "Cadastrado";
+              item.color = "primary";
+            } else if (item.estado == 1) {
+              item.status = "Em Análise";
+              item.color = "primary";
+            } else if (item.estado == 2) {
+              item.status = "Publicado";
+              item.color = "success";
+            } else if (item.estado == 3) {
+              item.status = "Finalizado";
+              item.color = "purple";
+            }
+          });
+          this.$store.commit("insertCampaigns", response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
