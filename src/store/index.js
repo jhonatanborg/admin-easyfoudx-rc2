@@ -8,20 +8,41 @@ export default new Vuex.Store({
     campaigns: null,
     typeFilter: null,
     campaignSelected: null,
-    carousel: null,
+    carouselSelected: null,
+    carouselList: null,
+    loadingPage: false,
+    users: null,
+    typeFilterUser: null,
+    userDelete: null,
   },
   mutations: {
     insertCampaigns(state, data) {
       state.campaigns = data;
     },
+
     setTypeFilter(state, data) {
       state.typeFilter = data;
     },
     setCampaignSelect(state, data) {
       state.campaignSelected = data;
     },
+    setCarouselList(state, data) {
+      state.carouselList = data;
+    },
     setCarousel(state, data) {
-      state.carousel = data;
+      state.carouselSelected = data;
+    },
+    setloader(state, data) {
+      state.loadingPage = data;
+    },
+    setUsers(state, data) {
+      state.users = data;
+    },
+    setTypeUser(state, data) {
+      state.typeFilterUser = data;
+    },
+    setUserDelete(state, data) {
+      state.userDelete = data;
     },
   },
   getters: {

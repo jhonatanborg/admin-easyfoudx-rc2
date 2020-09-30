@@ -52,12 +52,7 @@
                   >Finalizadas</v-chip
                 ></v-col
               >
-              <v-col cols="4">
-                <v-btn rounded small color="primary" dark
-                  >Filtrar <v-icon size="15">mdi-filter</v-icon></v-btn
-                >
-              </v-col></v-row
-            >
+            </v-row>
           </v-col>
         </v-row>
       </div>

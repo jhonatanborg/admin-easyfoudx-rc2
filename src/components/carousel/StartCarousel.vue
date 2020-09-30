@@ -16,14 +16,16 @@
       <v-row>
         <v-col v-for="(item, key) in carousel" :key="key" cols="4">
           <v-card
-            :to="{ name: 'edit-carousel', params: { id: '15' } }"
+            @click="setCarousel(item)"
             link
             flat
             rounded="15"
             class="pa-5"
           >
             <v-img
-              :src="'https://api.easyfundx.com/images/' + item.imagem"
+              height="200px"
+              :aspect-ratio="16 / 9"
+              :src="'https://api.easyfundx.com/images/carrossel/' + item.imagem"
             ></v-img>
             <v-list-item>
               <v-list-item-content>
@@ -46,7 +48,7 @@ import CarouselService from "@/services/carousel/CarouselService";
 export default {
   mounted() {
     CarouselService.listCarousel().then((response) => {
-      this.$store.commit("setCarousel", response.data);
+      this.$store.commit("setCarouselList", response.data);
     });
   },
   data() {
@@ -61,7 +63,13 @@ export default {
   },
   computed: {
     carousel() {
-      return this.$store.state.carousel || [];
+      return this.$store.state.carouselList || [];
+    },
+  },
+  methods: {
+    setCarousel(item) {
+      this.$store.commit("setCarousel", item);
+      this.$router.push({ name: "edit-carousel", query: { id: item.id } });
     },
   },
 };

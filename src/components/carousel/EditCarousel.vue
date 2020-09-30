@@ -11,7 +11,6 @@
           :to="{ name: 'start-carousel' }"
           outlined
           small
-          flat
           color="primary"
           right
         >
@@ -28,21 +27,26 @@
         height="300px"
       >
         <v-carousel-item
-          :src="image"
+          :src="
+            imageUrl
+              ? imageUrl
+              : 'https://api.easyfundx.com/images/carrossel/' + carousel.imagem
+          "
+          width="100%"
           reverse-transition="fade-transition"
           transition="fade-transition"
           gradient="to top right, rgba(120,115,101,.33), rgba(28,32,72,.7)"
         >
           <v-row class="fill-height" align="center" justify="center">
             <div class="text-center">
-              <h2 class="title-easy" v-text="title"></h2>
-              <h3 class="my-3 pa-5" v-text="details"></h3>
+              <h2 class="title-easy" v-text="carousel.titulo"></h2>
+              <h3 class="my-3 pa-5" v-text="carousel.mensagem"></h3>
               <v-btn
                 color="white"
                 depressed
                 class="black--text"
-                :href="link"
-                v-text="button"
+                :href="carousel.botao_link"
+                v-text="carousel.botao_texto"
               ></v-btn>
             </div>
           </v-row>
@@ -50,54 +54,50 @@
       </v-carousel>
       <v-row dense>
         <v-col cols="6">
+          <small>Titulo</small>
           <v-text-field
             solo
             dense
             flat
             label="Digite o titulo"
-            v-model="title"
+            v-model="carousel.titulo"
           ></v-text-field>
         </v-col>
         <v-col cols="6">
-          <v-text-field
-            solo
-            dense
-            flat
-            label="Digite a descrição"
-            v-model="details"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6">
+          <small>Link redirecionamento</small>
+
           <v-text-field
             solo
             flat
             dense
             label="Adicione o link da campanha"
-            v-model="link"
+            v-model="carousel.botao_link"
           ></v-text-field>
         </v-col>
         <v-col cols="6">
+          <small>Botão</small>
           <v-text-field
             solo
             dense
             flat
             label="Titulo do botão"
-            v-model="button"
+            v-model="carousel.botao_texto"
           ></v-text-field>
         </v-col>
-        <v-col cols="12">
+        <v-col cols="6">
+          <small>Imagem de fundo</small>
           <v-file-input
             label="Escolha uma imagem"
-            filled
             solo
             dense
-            v-model="image"
+            @change="onChange"
             flat
             prepend-icon="mdi-camera"
           ></v-file-input>
         </v-col>
+
         <v-col cols="4">
-          <v-btn block rounded color="primary">Adicionar</v-btn>
+          <v-btn block rounded color="primary">Confirmar</v-btn>
         </v-col>
       </v-row>
     </div>
@@ -112,9 +112,19 @@ export default {
       details: null,
       button: null,
       link: null,
-      image:
-        "https://s28943.pcdn.co/wp-content/uploads/2019/09/placeholder.jpg",
+      image: null,
+      imageUrl: null,
     };
+  },
+  computed: {
+    carousel() {
+      return this.$store.state.carouselSelected || {};
+    },
+  },
+  methods: {
+    onChange(e) {
+      this.imageUrl = URL.createObjectURL(e);
+    },
   },
 };
 </script>

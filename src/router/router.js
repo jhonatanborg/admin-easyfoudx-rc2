@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "home",
     component: Home,
   },
   {
@@ -51,8 +51,10 @@ const routes = [
         component: () => import("../components/carousel/NewCarousel.vue"),
       },
       {
-        path: "/editar-carrousel/:id",
+        path: "/editar-carrousel/",
         name: "edit-carousel",
+        props: (route) => ({ query: route.query.id }),
+
         component: () => import("../components/carousel/EditCarousel.vue"),
       },
     ],
@@ -60,7 +62,16 @@ const routes = [
   {
     path: "/usuarios",
     name: "users",
+    redirect: { name: "start-user" },
+
     component: () => import("../views/Users.vue"),
+    children: [
+      {
+        path: "/",
+        name: "start-user",
+        component: () => import("../components/user/StartUser.vue"),
+      },
+    ],
   },
   {
     path: "/sessao",
