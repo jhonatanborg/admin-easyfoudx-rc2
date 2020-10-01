@@ -14,7 +14,7 @@
     </v-row>
     <div>
       <v-row>
-        <v-col v-for="(item, key) in carousel" :key="key" cols="4">
+        <v-col v-for="(item, key) in carousel" :key="key" cols="3">
           <v-card
             @click="setCarousel(item)"
             link

@@ -1,82 +1,84 @@
 <template>
   <v-container>
-    <v-row justify="space-between">
-      <v-col cols="auto">
+    <div class="py-3">
+      <h3>Novo usuário</h3>
+      <v-divider class="my-3"></v-divider>
+    </div>
+    <v-row dense>
+      <v-col cols="3">
+        <v-text-field
+          v-model="user.nome"
+          dense
+          flat
+          filled
+          solo
+          label="Nome"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="user.email"
+          dense
+          flat
+          label="E-mail"
+          solo
+        ></v-text-field>
+      </v-col>
+      <v-col cols="3">
+        <v-text-field
+          v-model="user.senha"
+          label="Senha"
+          flat
+          dense
+          solo
+        ></v-text-field>
+      </v-col>
+
+      <v-col cols="3">
+        <v-btn
+          :loading="loading"
+          block
+          @click="validate"
+          color="primary"
+          class="font-weight-bold"
+          >Cadastrar
+        </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row dense>
+      <v-col cols="2">
         <div>
           <h3>Usuários</h3>
         </div>
       </v-col>
-      <v-row class="pa-5" dense justify="center">
-        <v-col cols="3">
-          <v-text-field
-            v-model="user.nome"
-            dense
-            flat
-            filled
-            solo
-            label="Nome"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-text-field
-            v-model="user.email"
-            dense
-            flat
-            label="E-mail"
-            solo
-          ></v-text-field>
-        </v-col>
-        <v-col cols="3">
-          <v-text-field
-            v-model="user.senha"
-            label="Senha"
-            flat
-            dense
-            solo
-          ></v-text-field>
-        </v-col>
-
-        <v-col cols="3">
-          <v-btn
-            :loading="loading"
-            block
-            @click="validate"
-            color="#E7AE71"
-            class="font-weight-bold"
-            >Cadastrar
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-col>
-        <v-row dense>
-          <v-col cols="auto"
-            ><v-chip
-              @click="$store.commit('setTypeUser', null)"
-              link
-              color="grey lighten-5"
-              >Todos</v-chip
-            ></v-col
-          >
-          <v-col cols="auto"
-            ><v-chip
-              @click="$store.commit('setTypeUser', 1)"
-              link
-              color="grey lighten-5"
-              >Administrador</v-chip
-            ></v-col
-          >
-          <v-col cols="auto"
-            ><v-chip
-              @click="$store.commit('setTypeUser', 0)"
-              link
-              color="grey lighten-5"
-              >Usuário padrão</v-chip
-            ></v-col
-          >
-        </v-row>
-      </v-col>
+      <v-col cols="auto"
+        ><v-chip
+          @click="$store.commit('setTypeUser', null)"
+          link
+          color="grey lighten-5"
+          >Todos</v-chip
+        ></v-col
+      >
+      <v-col cols="auto"
+        ><v-chip
+          @click="$store.commit('setTypeUser', 1)"
+          link
+          color="grey lighten-5"
+          >Administrador</v-chip
+        ></v-col
+      >
+      <v-col cols="auto"
+        ><v-chip
+          @click="$store.commit('setTypeUser', 0)"
+          link
+          color="grey lighten-5"
+          >Usuário padrão</v-chip
+        ></v-col
+      >
     </v-row>
     <v-divider class="my-3"></v-divider>
+
     <v-list subheader>
       <v-list-item v-for="(item, key) in users" :key="key">
         <v-list-item-content>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="col-sm-12 ">
+    <div>
       <!-- <v-row justify="end">
         <v-col cols="auto">
           <v-btn
@@ -15,97 +15,86 @@
           </v-btn>
         </v-col>
       </v-row> -->
-      <v-row dense align="center" justify="space-between">
-        <v-col cols="auto">
-          <div class="py-5">
-            <div></div>
-            <h4 v-text="campaign.titulo"></h4>
-            <div>
-              <span v-text="campaign.pessoa_nome">Carlão Catador</span>
+      <v-container fluid>
+        <v-row dense>
+          <v-col cols="8" class="pa-5">
+            <v-row align="center" dense justify="space-between">
+              <v-col cols="auto">
+                <div>
+                  <div></div>
+                  <h4 v-text="campaign.titulo"></h4>
+                  <div>
+                    <span v-text="campaign.pessoa_nome">Carlão Catador</span>
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="auto">
+                <v-chip
+                  small
+                  link
+                  :color="state.color"
+                  v-text="state.status"
+                ></v-chip>
+              </v-col>
+            </v-row>
+            <v-row dense no-gutters>
+              <v-col v-for="(item, n) in reportCampaign" :key="n" cols="3">
+                <v-list-item class=" px-0">
+                  <v-list-item-avatar tile size="50">
+                    <v-icon class="grey lighten-1" dark>
+                      {{ item.icon }}
+                    </v-icon>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+                    <v-list-item-subtitle
+                      >{{ item.value }}
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12">
+                <div><span>Sobre a campanha</span></div>
+                <div class="text-justify">
+                  <span v-html="campaign.descricao"></span>
+                </div>
+              </v-col>
+              <v-divider vertical></v-divider>
+            </v-row>
+          </v-col>
+          <v-col cols="4">
+            <div class="py-5">
+              <span>Imagem</span>
+              <v-divider class="mt-2"></v-divider>
             </div>
-          </div>
-        </v-col>
-        <v-col cols="auto">
-          <v-chip
-            small
-            link
-            :color="state.color"
-            v-text="state.status"
-          ></v-chip>
-        </v-col>
-      </v-row>
-      <v-card rounded="15" height="300px" flat>
-        <v-img
-          height="100%"
-          :aspect-ratio="16 / 9"
-          :src="'https://api.easyfundx.com/images/' + campaign.imagem_capa"
-        ></v-img>
-      </v-card>
-
-      <v-divider></v-divider>
-      <v-row>
-        <v-col v-for="(item, n) in reportCampaign" :key="n" cols="3">
-          <v-list-item>
-            <v-list-item-avatar>
-              <v-icon class="grey lighten-1" dark>
-                {{ item.icon }}
-              </v-icon>
-            </v-list-item-avatar>
-
-            <v-list-item-content>
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-
-              <v-list-item-subtitle>{{ item.value }} </v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-col>
-      </v-row>
-      <v-divider></v-divider>
-
-      <v-row>
-        <v-col cols="6">
-          <div><span>Sobre a campanha</span></div>
-          <div class="text-justify">
-            <span v-html="campaign.descricao"></span>
-          </div>
-        </v-col>
-        <v-divider vertical></v-divider>
-        <v-col cols="5">
-          <v-row dense>
-            <v-col cols="12">
-              <v-alert
-                dense
-                icon="mdi-firework"
-                border="left"
-                color="white"
-                light
-              >
-                <h2 v-text="convertMoney(campaign.valor)"></h2>
-                <v-divider></v-divider>
-                <div>
-                  <span>Meta</span>
-                </div>
-              </v-alert>
-            </v-col>
-            <v-col cols="12">
-              <v-alert
-                dense
-                icon="mdi-firework"
-                border="left"
-                color="white"
-                light
-              >
-                <h2 v-text="convertMoney(campaign.valor_arrecadado)"></h2>
-                <v-divider></v-divider>
-                <div>
-                  <span>Arrecadado</span>
-                </div>
-              </v-alert>
-            </v-col>
-          </v-row>
-        </v-col>
-      </v-row>
-      <div></div>
+            <v-card class="pa-2" height="200px" flat>
+              <v-img
+                height="100%"
+                :src="
+                  'https://api.easyfundx.com/images/' + campaign.imagem_capa
+                "
+              ></v-img>
+            </v-card>
+            <div class="py-5">
+              <span>Video</span>
+              <v-divider class="mt-2"></v-divider>
+            </div>
+            <v-card class="pa-2" flat height="200px">
+              <iframe
+                class="video"
+                :src="'https://www.youtube.com/embed/' + campaign.youtube_id"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </div>
 </template>
@@ -170,4 +159,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.video {
+  width: 100%;
+  height: 100%;
+}
+</style>

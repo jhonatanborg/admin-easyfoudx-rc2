@@ -19,20 +19,13 @@
             class="details-campaign"
             v-html="campaign.descricao"
           ></v-list-item-subtitle>
-          <v-list-item-action-text>{{
-            campaign.data_registro_h
-          }}</v-list-item-action-text>
         </v-list-item-content>
 
         <v-list-item-action>
-          <v-chip
-            small
-            link
-            dense
-            :color="campaign.color"
-            text-color="white"
-            dark
-          >
+          <v-list-item-action-text>{{
+            campaign.data_registro_h
+          }}</v-list-item-action-text>
+          <v-chip link dense :color="campaign.color" text-color="white" dark>
             <span v-text="campaign.status"></span>
           </v-chip>
         </v-list-item-action>
@@ -59,7 +52,7 @@ export default {
 .details-campaign {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 }
 </style>

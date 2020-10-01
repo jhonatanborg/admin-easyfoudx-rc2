@@ -57,8 +57,12 @@
         </v-row>
       </div>
       <v-divider></v-divider>
-      <div v-for="(item, index) in campaigns" :key="index">
-        <CardCampaign :campaign="item" />
+      <div>
+        <v-row>
+          <v-col v-for="(item, index) in campaigns" :key="index" cols="6">
+            <CardCampaign :campaign="item" />
+          </v-col>
+        </v-row>
       </div>
     </v-container>
   </div>
@@ -79,16 +83,7 @@ export default {
     this.initialize();
   },
   data() {
-    return {
-      items: [
-        {
-          avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-          title: "Ajude a Cata-Tudo Recicla (Carlão Catador)",
-          subtitle:
-            "<span class='text--primary'>Carlão Catador</span> &mdash; Catadores precisam de um veículo para garantir trabalho e renda de 19 famílias afetadas na pandemia.",
-        },
-      ],
-    };
+    return {};
   },
   computed: {
     campaigns() {
@@ -108,7 +103,7 @@ export default {
         .then((response) => {
           response.data.map((item) => {
             if (item.estado == 0) {
-              item.status = "Cadastrado";
+              item.status = "Cadastrada";
               item.color = "primary";
             } else if (item.estado == 1) {
               item.status = "Em Análise";

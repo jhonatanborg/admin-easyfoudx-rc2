@@ -1,10 +1,13 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import http from "@/services/config.js";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    token: null,
+    id: null,
     campaigns: null,
     typeFilter: null,
     campaignSelected: null,
@@ -16,6 +19,13 @@ export default new Vuex.Store({
     userDelete: null,
   },
   mutations: {
+    SET_LOGGED_USER(state, { token, id }) {
+      state.token = token;
+      state.id = id;
+    },
+    LOGOUT_USER(state) {
+      state.token = null;
+    },
     insertCampaigns(state, data) {
       state.campaigns = data;
     },
@@ -109,6 +119,53 @@ export default new Vuex.Store({
       }
     },
   },
-  actions: {},
+  actions: {
+    login({ commit }, user) {
+      return new Promise((resolve, reject) => {
+        http
+          .post("/auth/login", user)
+          .then((response) => {
+            localStorage.setItem("token", response.data.access_token);
+            commit("SET_LOGGED_USER", {
+              token: response.data.access_token,
+              id: response.data.id,
+            });
+            resolve(response.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        http
+          .get("/auth/refresh?logout=true")
+          .then((response) => {
+            commit("LOGOUT_USER", {});
+            resolve(response.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+    verifyAdmin() {
+      return new Promise((resolve, reject) => {
+        http
+          .get("/auth/test_admin", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          })
+          .then((response) => {
+            resolve(response.data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+  },
   modules: {},
 });

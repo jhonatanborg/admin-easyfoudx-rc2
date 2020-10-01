@@ -1,18 +1,23 @@
 <template>
   <div class="pa-5">
-    <v-row justify="space-between">
-      <v-col cols="auto">
-        <div>
-          <h3>Categorias</h3>
-        </div>
+    <div class="py-3">
+      <h3>Nova categoria</h3>
+      <v-divider class="my-3"></v-divider>
+    </div>
+    <v-row dense justify="start">
+      <v-col cols="6">
+        <v-text-field solo label="Titulo" dense flat></v-text-field>
       </v-col>
-      <v-col cols="auto">
-        <v-btn rounded color="primary">Adicionar</v-btn>
-      </v-col>
+      <v-col cols="3"> <v-btn color="primary">Adicionar</v-btn></v-col>
     </v-row>
 
-    <v-divider class="my-3"></v-divider>
     <v-row>
+      <v-col cols="12">
+        <div>
+          <h3>Categorias</h3>
+          <v-divider class="my-3"></v-divider>
+        </div>
+      </v-col>
       <v-col v-for="n in 16" :key="n" cols="3">
         <v-card flat>
           <v-list-item>
